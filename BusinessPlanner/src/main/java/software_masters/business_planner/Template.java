@@ -32,11 +32,11 @@ public class Template
 	}
 
 	/**
+	 * Constructor for creating Template object.
+	 *
 	 * @param developerTemplateName
 	 * @param userTemplateName
 	 * @param root
-	 * 
-	 *                              Constructor for creating Template object.
 	 */
 	public Template(String developerTemplateName, String userTemplateName, TemplateSection root)
 	{
