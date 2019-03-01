@@ -153,7 +153,7 @@ public class TemplateSection
 	}
 
 	/**
-	 * This method adds a child TemplateSection object
+	 * This method returns a child TemplateSection object
 	 * 
 	 * @param index the location of child in arraylist of children
 	 * @return the child object associated with specified index
