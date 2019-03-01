@@ -24,7 +24,7 @@ public class TemplateTester extends TestCase
 
 	/**
 	 * Verifies the user template can be serialized and read in. This is done
-	 * separately because this can be significantly more complicated that the
+	 * separately because this can be significantly more complicated than the
 	 * developer template.
 	 */
 	public void testSaveAndLoadUser()
