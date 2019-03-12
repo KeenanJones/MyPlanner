@@ -41,24 +41,14 @@
                 </void>
                 <void property="children">
                  <void method="add">
-                  <object class="software_masters.business_planner.TemplateSection" id="TemplateSection5">
+                  <object class="software_masters.business_planner.TemplateSection">
                    <void property="category">
                     <string>Key Results</string>
-                   </void>
-                   <void property="contents">
-                    <void method="add">
-                     <object class="software_masters.business_planner.Text"/>
-                    </void>
                    </void>
                    <void property="parent">
                     <object idref="TemplateSection4"/>
                    </void>
                   </object>
-                 </void>
-                </void>
-                <void property="contents">
-                 <void method="add">
-                  <object class="software_masters.business_planner.Text"/>
                  </void>
                 </void>
                 <void property="parent">
@@ -67,31 +57,16 @@
                </object>
               </void>
              </void>
-             <void property="contents">
-              <void method="add">
-               <object class="software_masters.business_planner.Text"/>
-              </void>
-             </void>
              <void property="parent">
               <object idref="TemplateSection2"/>
              </void>
             </object>
            </void>
           </void>
-          <void property="contents">
-           <void method="add">
-            <object class="software_masters.business_planner.Text"/>
-           </void>
-          </void>
           <void property="parent">
            <object idref="TemplateSection1"/>
           </void>
          </object>
-        </void>
-       </void>
-       <void property="contents">
-        <void method="add">
-         <object class="software_masters.business_planner.Text"/>
         </void>
        </void>
        <void property="name">
@@ -101,11 +76,6 @@
         <object idref="TemplateSection0"/>
        </void>
       </object>
-     </void>
-    </void>
-    <void property="contents">
-     <void method="add">
-      <object class="software_masters.business_planner.Text"/>
      </void>
     </void>
     <void property="name">

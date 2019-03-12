@@ -11,7 +11,8 @@ public class TemplateTester extends TestCase
 	 */
 	public void testSaveAndLoadDeveloper()
 	{
-		Template VMOSA = VMOSA_builder.generateTemplate();
+		/***VMOSA***/
+		Template VMOSA = VMOSA_Builder.generateTemplate();
 		VMOSA.save();
 		Template VMOSA_clone = Template.loadDeveloperTemplate("VMOSA");
 
@@ -20,6 +21,29 @@ public class TemplateTester extends TestCase
 
 		// verify changing one does not change the other
 		makeChange(VMOSA, VMOSA_clone);
+		
+		
+		/***OKR***/
+		Template OKR = OKR_Builder.generateTemplate();
+		OKR.save();
+		Template OKR_clone = Template.loadDeveloperTemplate("OKR");
+
+		// verify loaded object and serialized object contain the same content
+		Assert.assertTrue(OKR.equals(OKR_clone));
+
+		// verify changing one does not change the other
+		makeChange(OKR, OKR_clone);
+		
+		/***Centre_Assess***/
+		Template Centre_Assess = Centre_Assess_Builder.generateTemplate();
+		Centre_Assess.save();
+		Template Centre_Assess_clone = Template.loadDeveloperTemplate("Centre_Assessment");
+
+		// verify loaded object and serialized object contain the same content
+		Assert.assertTrue(Centre_Assess.equals(Centre_Assess_clone));
+
+		// verify changing one does not change the other
+		makeChange(Centre_Assess, Centre_Assess_clone);
 	}
 
 	/**
@@ -30,7 +54,7 @@ public class TemplateTester extends TestCase
 	public void testSaveAndLoadUser()
 	{
 		// user template
-		Template userVMOSA = VMOSA_builder.generateTemplate();
+		Template userVMOSA = VMOSA_Builder.generateTemplate();
 		userVMOSA.setUserTemplateName("MyBusinessPlan");
 
 		/* Add extra child branch and test serialization process */

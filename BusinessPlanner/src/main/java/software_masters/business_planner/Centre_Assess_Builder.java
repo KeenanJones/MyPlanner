@@ -13,8 +13,6 @@ public class Centre_Assess_Builder
 	private static TemplateSection makeSection(String category, String name, boolean canCopy)
 	{
 		TemplateSection section = new TemplateSection(category, name, canCopy);
-		Content textContent = new Text();
-		section.addContent(textContent);
 		return section;
 	}
 

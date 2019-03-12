@@ -16,14 +16,12 @@ package software_masters.business_planner;
  * These template builders could implement a super class since some of it is the
  * same. at the same time these are throw away classes once run.
  */
-public class VMOSA_builder
+public class OKR_Builder
 {
 
 	private static TemplateSection makeSection(String category, String name, boolean canCopy)
 	{
 		TemplateSection section = new TemplateSection(category, name, canCopy);
-		Content textContent = new Text();
-		section.addContent(textContent);
 		return section;
 	}
 
@@ -31,26 +29,29 @@ public class VMOSA_builder
 	{
 		TemplateSection Vision = makeSection("Vision", "Vision", false);
 		TemplateSection Mission = makeSection("Mission", "Mission", false);
-		TemplateSection Objective = makeSection("Objectives", null, true);
-		TemplateSection Strategy = makeSection("Strategies", null, true);
-		TemplateSection ActionPlan = makeSection("Action Plans", null, true);
+		TemplateSection longTermGoals = makeSection("Long Term Goals", null, true);
+		TemplateSection shortTermGoals = makeSection("Short Term Goals", null, true);
+		TemplateSection Objectives = makeSection("Objectives", null, true);
+		TemplateSection keyResults = makeSection("Key Results", null, true);
 
 		Vision.addChild(Mission);
-		Mission.addChild(Objective);
-		Objective.addChild(Strategy);
-		Strategy.addChild(ActionPlan);
+		Mission.addChild(longTermGoals);
+		longTermGoals.addChild(shortTermGoals);
+		shortTermGoals.addChild(Objectives);
+		Objectives.addChild(keyResults);
 
-		ActionPlan.setParent(Strategy);
-		Strategy.setParent(Objective);
-		Objective.setParent(Mission);
+		keyResults.setParent(Objectives);
+		Objectives.setParent(shortTermGoals);
+		shortTermGoals.setParent(longTermGoals);
+		longTermGoals.setParent(Mission);
 		Mission.setParent(Vision);
 
-		return new Template("VMOSA", null, Vision);
+		return new Template("OKR", null, Vision);
 	}
 
 	public static void main(String[] args)
 	{
-		System.out.println("Start VMOSA");
+		System.out.println("Start OKR");
 		Template VMOSA = generateTemplate();
 		VMOSA.save();
 		System.out.println("end");

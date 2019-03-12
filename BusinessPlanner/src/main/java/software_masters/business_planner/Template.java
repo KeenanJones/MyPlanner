@@ -21,29 +21,37 @@ public class Template
 {
 	private String developerTemplateName;
 	private String userTemplateName;
-	private TemplateSection root;
+	private TemplateSection current;
+	private String year;
+	private boolean editable;
 
 	/**
 	 * This constructor creates a default object for use by XML encoder
 	 */
 	public Template()
 	{
-		this(null, null, null);
+		this(null, null, null, null, false);
 	}
 
 	/**
-	 * Constructor for creating Template object.
-	 *
+	 * Constructor for Template
 	 * @param developerTemplateName
 	 * @param userTemplateName
-	 * @param root
+	 * @param current
+	 * @param year
+	 * @param editable
 	 */
-	public Template(String developerTemplateName, String userTemplateName, TemplateSection root)
+	public Template(String developerTemplateName, String userTemplateName, TemplateSection current, String year,
+			boolean editable)
 	{
 		this.developerTemplateName = developerTemplateName;
 		this.userTemplateName = userTemplateName;
-		this.root = root;
+		this.current = current;
+		this.year = year;
+		this.editable = editable;
 	}
+
+
 
 	/**
 	 * @return the name of the developer template
@@ -82,7 +90,7 @@ public class Template
 	 */
 	public TemplateSection getRoot()
 	{
-		return root;
+		return current;
 	}
 
 	/**
@@ -90,7 +98,7 @@ public class Template
 	 */
 	public void setRoot(TemplateSection root)
 	{
-		this.root = root;
+		this.current = root;
 	}
 
 	/**
@@ -190,11 +198,11 @@ public class Template
 				return false;
 		} else if (!developerTemplateName.equals(other.developerTemplateName))
 			return false;
-		if (root == null)
+		if (current == null)
 		{
-			if (other.root != null)
+			if (other.current != null)
 				return false;
-		} else if (!root.equals(other.root))
+		} else if (!current.equals(other.current))
 			return false;
 		if (userTemplateName == null)
 		{
@@ -203,6 +211,34 @@ public class Template
 		} else if (!userTemplateName.equals(other.userTemplateName))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the year
+	 */
+	public String getYear() {
+		return year;
+	}
+
+	/**
+	 * @param year the year to set
+	 */
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable() {
+		return editable;
+	}
+
+	/**
+	 * @param editable the editable to set
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 }
