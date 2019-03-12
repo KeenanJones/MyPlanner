@@ -24,7 +24,7 @@ public class TemplateSection
 	private boolean canCopy;
 
 	private ArrayList<TemplateSection> children = new ArrayList<TemplateSection>();
-	//private ArrayList<Content> contents = new ArrayList<Content>();
+	// private ArrayList<Content> contents = new ArrayList<Content>();
 
 	/**
 	 * constructor for serialization
@@ -174,31 +174,25 @@ public class TemplateSection
 	/**
 	 * @return the contents
 	 */
-	/*public ArrayList<Content> getContents()
-	{
-		return contents;
-	}
-
-	/**
+	/*
+	 * public ArrayList<Content> getContents() { return contents; }
+	 * 
+	 * /**
+	 * 
 	 * @param contents the contents to set
 	 */
-	/*public void setContents(ArrayList<Content> contents)
-	{
-		this.contents = contents;
-	}
-
-	/**
-	 * This method adds a content object to section
+	/*
+	 * public void setContents(ArrayList<Content> contents) { this.contents =
+	 * contents; }
+	 * 
+	 * /** This method adds a content object to section
 	 * 
 	 * @param c1 a content object to be added to list of contents
 	 */
-	/*public void addContent(Content c1)
-	{
-		this.contents.add(c1);
-	}
-
-	/**
-	 * This method determines if deep copy is allowed and if so initiates a
+	/*
+	 * public void addContent(Content c1) { this.contents.add(c1); }
+	 * 
+	 * /** This method determines if deep copy is allowed and if so initiates a
 	 * recursive deep copy algorithm.
 	 * 
 	 * @return a clone of the TemplateSection using a recursive deep copy method.
@@ -221,10 +215,9 @@ public class TemplateSection
 	private TemplateSection recDeepCopyHelper()
 	{
 		TemplateSection copy = new TemplateSection(this.category, this.name, this.canCopy);
-		/*for (Content c1 : this.contents)
-		{
-			copy.addContent(c1.copy());
-		}*/
+		/*
+		 * for (Content c1 : this.contents) { copy.addContent(c1.copy()); }
+		 */
 		/* Base case - Current TemplateSection has no children */
 		if (children.isEmpty())
 		{
@@ -271,12 +264,10 @@ public class TemplateSection
 				return false;
 		} else if (!children.equals(other.children))
 			return false;
-		/*if (contents == null)
-		{
-			if (other.contents != null)
-				return false;
-		} else if (!contents.equals(other.contents))
-			return false;*/
+		/*
+		 * if (contents == null) { if (other.contents != null) return false; } else if
+		 * (!contents.equals(other.contents)) return false;
+		 */
 		if (name == null)
 		{
 			if (other.name != null)

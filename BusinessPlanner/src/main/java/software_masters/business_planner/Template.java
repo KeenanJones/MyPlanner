@@ -35,6 +35,7 @@ public class Template
 
 	/**
 	 * Constructor for Template
+	 * 
 	 * @param developerTemplateName
 	 * @param userTemplateName
 	 * @param current
@@ -50,8 +51,6 @@ public class Template
 		this.year = year;
 		this.editable = editable;
 	}
-
-
 
 	/**
 	 * @return the name of the developer template
@@ -216,28 +215,32 @@ public class Template
 	/**
 	 * @return the year
 	 */
-	public String getYear() {
+	public String getYear()
+	{
 		return year;
 	}
 
 	/**
 	 * @param year the year to set
 	 */
-	public void setYear(String year) {
+	public void setYear(String year)
+	{
 		this.year = year;
 	}
 
 	/**
 	 * @return the editable
 	 */
-	public boolean isEditable() {
+	public boolean isEditable()
+	{
 		return editable;
 	}
 
 	/**
 	 * @param editable the editable to set
 	 */
-	public void setEditable(boolean editable) {
+	public void setEditable(boolean editable)
+	{
 		this.editable = editable;
 	}
 
