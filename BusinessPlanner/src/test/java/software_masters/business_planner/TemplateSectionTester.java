@@ -53,7 +53,7 @@ public class TemplateSectionTester extends TestCase
 
 	/**
 	 * Verifies content objects can be added to a templateSection
-	 */
+	 *
 	public void testAddContent()
 	{
 		TemplateSection ts1 = new TemplateSection("Vision", "Vision", false);
@@ -62,7 +62,7 @@ public class TemplateSectionTester extends TestCase
 
 		Assert.assertEquals(ts1.getContents().get(0), t1);
 
-	}
+	}*/
 
 	/*
 	 * we do not not find it necessary to remove content since the developer creates
