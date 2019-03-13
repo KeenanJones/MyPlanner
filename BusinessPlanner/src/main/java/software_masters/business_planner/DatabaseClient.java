@@ -13,29 +13,32 @@ import java.rmi.RemoteException;
  */
 public class DatabaseClient
 {
+	private final String IP;
+	private final int PORT = 1099;
 	private Database database;
 	private User u;
+	
 	
 	/**
 	 * Constructor: Connects to Server through RMI, allows user to call methods
 	 * to view, create, edit plans in Database
 	 */
-	public DatabaseClient()
+	public DatabaseClient(String IP)
 	{
+		this.IP = IP;
 
 		try
 		{
 			Registry registry = getRegistry();
 			database = (Database) registry.lookup("RMIDatabase");
-
-			String s = database.sayHello();
-			System.out.println(s);
+			
 		} catch (Exception ex)
 		{
 			ex.printStackTrace();
 			System.out.println("registry lookup failed in DatabaseClient");
 		}
 	}
+	
 	/**
 	 * This function returns the Registry object created by DatabaseServer
 	 * link: https://www.programcreek.com/java-api-examples/?class=java.rmi.registry.LocateRegistry&method=createRegistry
@@ -47,8 +50,9 @@ public class DatabaseClient
 		Registry registry = null;
 		try
 		{
-			System.out.println("Connecting to registry --> port 57577");
-			registry = LocateRegistry.getRegistry("10.14.1.66",57577);
+			System.out.println("Connecting to registry --> port " + PORT);
+			registry = LocateRegistry.getRegistry(IP,PORT);
+			
 		} catch (RemoteException e)
 		{
 			e.printStackTrace();
@@ -56,5 +60,4 @@ public class DatabaseClient
 		}
 		return registry;
 	}
-
 }

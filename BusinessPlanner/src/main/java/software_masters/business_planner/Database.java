@@ -25,4 +25,6 @@ public interface Database extends Remote
 	void addUser(User u, User newUser) throws RemoteException;
 
 	boolean canEdit(User u, Template t) throws RemoteException;
+	
+	User login(String user, String pass) throws RemoteException;
 }
