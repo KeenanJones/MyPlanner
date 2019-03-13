@@ -12,7 +12,7 @@ import java.rmi.*;
 public interface Database extends Remote
 {
 
-	void save() throws RemoteException;
+	String save() throws RemoteException;
 
 	Template getPlan(String year, User u) throws RemoteException;
 

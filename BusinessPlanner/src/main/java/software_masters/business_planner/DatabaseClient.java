@@ -14,50 +14,33 @@ import java.rmi.RemoteException;
 public class DatabaseClient
 {
 	private final String IP;
-	private final int PORT = 1099;
+	private final int PORT = 1098;
 	private Database database;
 	private User u;
 	
+	public static void main(String[] args)
+	{
+		DatabaseClient c = new DatabaseClient("10.14.1.80");
+	}
 	
 	/**
 	 * Constructor: Connects to Server through RMI, allows user to call methods
 	 * to view, create, edit plans in Database
 	 */
-	public DatabaseClient(String IP)
+	public DatabaseClient(String ip_address)
 	{
-		this.IP = IP;
+		IP = ip_address;
 
 		try
 		{
-			Registry registry = getRegistry();
+			Registry registry = LocateRegistry.getRegistry(IP,PORT);
 			database = (Database) registry.lookup("RMIDatabase");
-			
+			String s = database.save();
+			System.out.println(s);
 		} catch (Exception ex)
 		{
 			ex.printStackTrace();
 			System.out.println("registry lookup failed in DatabaseClient");
 		}
-	}
-	
-	/**
-	 * This function returns the Registry object created by DatabaseServer
-	 * link: https://www.programcreek.com/java-api-examples/?class=java.rmi.registry.LocateRegistry&method=createRegistry
-	 * @return the registry object
-	 * @throws RemoteException
-	 */
-	private Registry getRegistry() throws RemoteException
-	{
-		Registry registry = null;
-		try
-		{
-			System.out.println("Connecting to registry --> port " + PORT);
-			registry = LocateRegistry.getRegistry(IP,PORT);
-			
-		} catch (RemoteException e)
-		{
-			e.printStackTrace();
-			System.out.println("get registry in DatabaseClient failed");
-		}
-		return registry;
 	}
 }

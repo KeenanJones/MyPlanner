@@ -23,7 +23,9 @@ import java.util.*;
 public class DatabaseServer extends UnicastRemoteObject implements Database
 {
 
-	private final static int PORT = 1099;
+	private static final long serialVersionUID = 5521746525732179669L;
+
+	private final static int PORT = 1098;
 	
 	private ArrayList<User> userList;
 	private ArrayList<Department> deptList;
@@ -36,7 +38,7 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 			DatabaseServer server = new DatabaseServer();
 
 			System.out.println("Creating registry --> port " + PORT);
-			Registry registry = LocateRegistry.createRegistry(PORT);
+			Registry registry = LocateRegistry.getRegistry(PORT);
 			registry.rebind("RMIDatabase", server);
 
 		} catch (RemoteException e)
@@ -57,12 +59,6 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 		userList = new ArrayList<User>();
 		deptList = new ArrayList<Department>();
 		
-		/*
-		 * Department CS = new Department()
-		 * User CSadmin = new User
-		 * deptList.add(CS)
-		 * userList.add(CSadmin)
-		 */
 	}
 
 	/**
@@ -70,7 +66,7 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	 * 
 	 * @throws RemoteException
 	 */
-	public void save() throws RemoteException
+	public String save() throws RemoteException
 	{
 		String filename = "Server.data";
 		XMLEncoder encoder = null;
@@ -83,7 +79,8 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 		}
 		encoder.writeObject(this);
 		encoder.close();
-
+		
+		return "save() called in Server";
 	}
 	
 	/**
