@@ -1,6 +1,7 @@
 package software_masters.business_planner;
 
 import java.rmi.registry.*;
+import java.rmi.RemoteException;
 
 /**
  * @author alexander.garuba
@@ -12,28 +13,48 @@ import java.rmi.registry.*;
  */
 public class DatabaseClient
 {
+	private Database database;
+	private User u;
 	
-	public static void main(String [] args)
+	/**
+	 * Constructor: Connects to Server through RMI, allows user to call methods
+	 * to view, create, edit plans in Database
+	 */
+	public DatabaseClient()
 	{
-		new DatabaseClient().ping();
-	}
-	public void ping()
-	{
-		
+
 		try
 		{
-			System.out.println("Connecting to registry...");
-			Registry registry = LocateRegistry.getRegistry("127.0.0.1");
-			DatabaseClient stub = (DatabaseClient) registry.lookup("RemoteHello");
-			
-			String s = stub.sayHello();
+			Registry registry = getRegistry();
+			database = (Database) registry.lookup("RMIDatabase");
+
+			String s = database.sayHello();
 			System.out.println(s);
-		}
-		catch(Exception ex)
+		} catch (Exception ex)
 		{
 			ex.printStackTrace();
-			System.out.println("problem");
+			System.out.println("registry lookup failed in DatabaseClient");
 		}
+	}
+	/**
+	 * This function returns the Registry object created by DatabaseServer
+	 * link: https://www.programcreek.com/java-api-examples/?class=java.rmi.registry.LocateRegistry&method=createRegistry
+	 * @return the registry object
+	 * @throws RemoteException
+	 */
+	private Registry getRegistry() throws RemoteException
+	{
+		Registry registry = null;
+		try
+		{
+			System.out.println("Connecting to registry --> port 57577");
+			registry = LocateRegistry.getRegistry("10.14.1.66",57577);
+		} catch (RemoteException e)
+		{
+			e.printStackTrace();
+			System.out.println("get registry in DatabaseClient failed");
+		}
+		return registry;
 	}
 
 }

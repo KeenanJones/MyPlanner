@@ -11,7 +11,7 @@ public class User
 	private final String name;
 	private final String password;
 	private final Department department;
-	private boolean isAdmin;
+	public boolean isAdmin;
 
 	/**
 	 * Constructor for User. Called in addUser --> Server class
