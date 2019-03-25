@@ -2,11 +2,7 @@ package software_masters.business_planner;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -23,29 +19,29 @@ import java.util.*;
 public class DatabaseServer extends UnicastRemoteObject implements Database
 {
 
-	private static final long serialVersionUID = 5521746525732179669L;
+	private static final long serialVersionUID = -4049963225747792465L;
 
 	private final static int PORT = 1098;
-	
+
 	private ArrayList<User> userList;
 	private ArrayList<Department> deptList;
-	User u;
 
 	public static void main(String[] args)
 	{
-		try
-		{
-			DatabaseServer server = new DatabaseServer();
+		/*
+		 * try { DatabaseServer server = new DatabaseServer();
+		 * 
+		 * System.out.println("Creating registry --> port " + PORT); Registry registry =
+		 * LocateRegistry.getRegistry(PORT); registry.rebind("RMIDatabase", server);
+		 * 
+		 * } catch (RemoteException e) { e.printStackTrace();
+		 * System.out.println("creating registry in DatabaseServer failed"); }
+		 */
+	}
 
-			System.out.println("Creating registry --> port " + PORT);
-			Registry registry = LocateRegistry.getRegistry(PORT);
-			registry.rebind("RMIDatabase", server);
-
-		} catch (RemoteException e)
-		{
-			e.printStackTrace();
-			System.out.println("creating registry in DatabaseServer failed");
-		}
+	public DatabaseServer() throws RemoteException
+	{
+		this(null, null);
 	}
 
 	/**
@@ -53,12 +49,12 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	 * 
 	 * @throws RemoteException
 	 */
-	public DatabaseServer() throws RemoteException
+	public DatabaseServer(ArrayList<User> users, ArrayList<Department> depts) throws RemoteException
 	{
 		super();
-		userList = new ArrayList<User>();
-		deptList = new ArrayList<Department>();
-		
+		userList = users;
+		deptList = depts;
+
 	}
 
 	/**
@@ -66,9 +62,9 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	 * 
 	 * @throws RemoteException
 	 */
-	public String save() throws RemoteException
+	public void save() throws RemoteException
 	{
-		String filename = "Server.data";
+		String filename = "users.data";
 		XMLEncoder encoder = null;
 		try
 		{
@@ -77,12 +73,22 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 		{
 			System.out.println("ERROR: While Creating or Opening the File " + filename);
 		}
-		encoder.writeObject(this);
+		encoder.writeObject(userList);
 		encoder.close();
 		
-		return "save() called in Server";
+		String filename1 = "depts.data";
+		XMLEncoder encoder1 = null;
+		try
+		{
+			encoder1 = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(filename1)));
+		} catch (FileNotFoundException fileNotFound)
+		{
+			System.out.println("ERROR: While Creating or Opening the File " + filename1);
+		}
+		encoder1.writeObject(deptList);
+		encoder1.close();
 	}
-	
+
 	/**
 	 * This method is used to load database
 	 * 
@@ -91,7 +97,7 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	 */
 	public static DatabaseServer load() throws RemoteException
 	{
-		String filepath = "Server.data";
+		String filepath = "users.data";
 		XMLDecoder decoder = null;
 		try
 		{
@@ -100,7 +106,18 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 		{
 			System.out.println("ERROR: File " + filepath + " not found");
 		}
-		return (DatabaseServer) decoder.readObject();
+		
+		String filepath1 = "depts.data";
+		XMLDecoder decoder1 = null;
+		try
+		{
+			decoder1 = new XMLDecoder(new BufferedInputStream(new FileInputStream(filepath1)));
+		} catch (FileNotFoundException e)
+		{
+			System.out.println("ERROR: File " + filepath1 + " not found");
+		}
+		return new DatabaseServer( (ArrayList<User>) decoder.readObject(), (ArrayList<Department>) decoder1.readObject() );
+
 	}
 
 	/**
@@ -116,11 +133,11 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 		Template t = null;
 		Department dept = u.getDepartment();
 
-		for (int i = 0; i < dept.templateList.size(); i++)
+		for (int i = 0; i < dept.getTemplateList().size(); i++)
 		{
-			if (year.equals(dept.templateList.get(i).getYear()))
+			if (year.equals(dept.getTemplateList().get(i).getYear()))
 			{
-				t = dept.templateList.get(i);
+				t = dept.getTemplateList().get(i);
 				break;
 			}
 		}
@@ -141,11 +158,11 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	{
 		Department dept = u.getDepartment();
 
-		for (int i = 0; i < dept.templateList.size(); i++)
+		for (int i = 0; i < dept.getTemplateList().size(); i++)
 		{
-			if (t.getYear().equals(dept.templateList.get(i).getYear()))
+			if (t.getYear().equals(dept.getTemplateList().get(i).getYear()))
 			{
-				dept.templateList.set(i, t);
+				dept.getTemplateList().set(i, t);
 				break;
 			}
 		}
@@ -162,7 +179,7 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	 */
 	public Template makePlan(User u) throws RemoteException
 	{
-		return deptList.get(deptList.indexOf(u.getDepartment())).deptTemplate;
+		return deptList.get(deptList.indexOf(u.getDepartment())).getDeptTemplate();
 	}
 
 	/**
@@ -223,17 +240,18 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	}
 
 	/**
-	 * This function takes a username and password and authenticates the login based on
-	 * userList
+	 * This function takes a username and password and authenticates the login based
+	 * on userList
 	 * 
 	 * @param user the username
 	 * @param pass the password
-	 * @return the User object associated with authenticated login, null if not found
+	 * @return the User object associated with authenticated login, null if not
+	 *         found
 	 */
 	public User login(String user, String pass) throws RemoteException
 	{
 		User auth = null;
-		
+
 		for (int i = 0; i < userList.size(); i++)
 		{
 			if (userList.get(i).getName().equals(user) && userList.get(i).getPassword().equals(pass))
@@ -241,8 +259,28 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 				auth = userList.get(i);
 			}
 		}
-		
+
 		return auth;
+	}
+	
+	public ArrayList<User> getUserList()
+	{
+		return userList;
+	}
+
+	public void setUserList(ArrayList<User> userList)
+	{
+		this.userList = userList;
+	}
+
+	public ArrayList<Department> getDeptList()
+	{
+		return deptList;
+	}
+
+	public void setDeptList(ArrayList<Department> deptList)
+	{
+		this.deptList = deptList;
 	}
 
 }

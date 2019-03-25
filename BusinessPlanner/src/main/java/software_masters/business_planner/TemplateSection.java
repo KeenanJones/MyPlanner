@@ -13,9 +13,12 @@ package software_masters.business_planner;
  */
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class TemplateSection
+public class TemplateSection implements Serializable
 {
+
+	private static final long serialVersionUID = -2102300482406212530L;
 
 	private String category;
 	private String name;

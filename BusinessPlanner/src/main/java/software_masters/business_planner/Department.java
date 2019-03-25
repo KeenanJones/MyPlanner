@@ -1,6 +1,7 @@
 package software_masters.business_planner;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * @author alexander.garuba
@@ -11,11 +12,18 @@ import java.util.ArrayList;
  * 
  * @since 3.12.2019
  */
-public class Department
+public class Department implements Serializable
 {
 
-	public final Template deptTemplate;
-	public ArrayList<Template> templateList;
+	private static final long serialVersionUID = -6137206464324856865L;
+
+	private final Template deptTemplate;
+	private ArrayList<Template> templateList;
+
+	public Department()
+	{
+		this(null, null);
+	}
 
 	/**
 	 * Constructor for Department object
@@ -26,7 +34,7 @@ public class Department
 	public Department(Template deptTemplate, ArrayList<Template> templateList)
 	{
 		this.deptTemplate = deptTemplate;
-		this.templateList = templateList;
+		this.setTemplateList(templateList);
 	}
 
 	/**
@@ -37,7 +45,31 @@ public class Department
 	public Department(Template deptTemplate)
 	{
 		this.deptTemplate = deptTemplate;
-		templateList = new ArrayList<Template>();
+		setTemplateList(new ArrayList<Template>());
+	}
+
+	/**
+	 * @return the deptTemplate
+	 */
+	public Template getDeptTemplate()
+	{
+		return deptTemplate;
+	}
+
+	/**
+	 * @return the templateList
+	 */
+	public ArrayList<Template> getTemplateList()
+	{
+		return templateList;
+	}
+
+	/**
+	 * @param templateList the templateList to set
+	 */
+	public void setTemplateList(ArrayList<Template> templateList)
+	{
+		this.templateList = templateList;
 	}
 
 }

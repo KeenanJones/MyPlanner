@@ -56,40 +56,6 @@
           </void>
          </object>
         </void>
-        <void method="add">
-         <object class="software_masters.business_planner.TemplateSection" id="TemplateSection4">
-          <void property="category">
-           <string>Objectives</string>
-          </void>
-          <void property="children">
-           <void method="add">
-            <object class="software_masters.business_planner.TemplateSection" id="TemplateSection5">
-             <void property="category">
-              <string>Strategies</string>
-             </void>
-             <void property="children">
-              <void method="add">
-               <object class="software_masters.business_planner.TemplateSection">
-                <void property="category">
-                 <string>Action Plans</string>
-                </void>
-                <void property="parent">
-                 <object idref="TemplateSection5"/>
-                </void>
-               </object>
-              </void>
-             </void>
-             <void property="parent">
-              <object idref="TemplateSection4"/>
-             </void>
-            </object>
-           </void>
-          </void>
-          <void property="parent">
-           <object idref="TemplateSection1"/>
-          </void>
-         </object>
-        </void>
        </void>
        <void property="name">
         <string>Mission</string>
@@ -106,7 +72,7 @@
    </object>
   </void>
   <void property="userTemplateName">
-   <string>MyBusinessPlan</string>
+   <string>VMOSA</string>
   </void>
   <void property="year">
    <string>2019</string>

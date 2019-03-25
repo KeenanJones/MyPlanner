@@ -7,6 +7,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 
 /**
  * This class can be both a representation of a business plan or a business plan
@@ -17,8 +18,11 @@ import java.io.FileOutputStream;
  * @since 2019-02-23
  */
 
-public class Template
+public class Template implements Serializable
 {
+
+	private static final long serialVersionUID = -5702002661933371425L;
+
 	private String developerTemplateName;
 	private String userTemplateName;
 	private TemplateSection current;
@@ -82,6 +86,38 @@ public class Template
 	public void setUserTemplateName(String userTemplateName)
 	{
 		this.userTemplateName = userTemplateName;
+	}
+
+	/**
+	 * @return the year
+	 */
+	public String getYear()
+	{
+		return year;
+	}
+
+	/**
+	 * @param year the year to set
+	 */
+	public void setYear(String year)
+	{
+		this.year = year;
+	}
+
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable()
+	{
+		return editable;
+	}
+
+	/**
+	 * @param editable the editable to set
+	 */
+	public void setEditable(boolean editable)
+	{
+		this.editable = editable;
 	}
 
 	/**
@@ -186,62 +222,36 @@ public class Template
 	{
 		if (this == obj)
 			return true;
-		if (obj == null)
+		else if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		else if (getClass() != obj.getClass())
 			return false;
-		Template other = (Template) obj;
-		if (developerTemplateName == null)
+		else
 		{
-			if (other.developerTemplateName != null)
+			Template other = (Template) obj;
+
+			if (developerTemplateName == null)
+			{
+				if (other.developerTemplateName != null)
+					return false;
+			} else if (!developerTemplateName.equals(other.developerTemplateName))
 				return false;
-		} else if (!developerTemplateName.equals(other.developerTemplateName))
-			return false;
-		if (current == null)
-		{
-			if (other.current != null)
+
+			if (current == null)
+			{
+				if (other.current != null)
+					return false;
+			} else if (!current.equals(other.current))
 				return false;
-		} else if (!current.equals(other.current))
-			return false;
-		if (userTemplateName == null)
-		{
-			if (other.userTemplateName != null)
+
+			if (userTemplateName == null)
+			{
+				if (other.userTemplateName != null)
+					return false;
+			} else if (!userTemplateName.equals(other.userTemplateName))
 				return false;
-		} else if (!userTemplateName.equals(other.userTemplateName))
-			return false;
+		}
 		return true;
-	}
-
-	/**
-	 * @return the year
-	 */
-	public String getYear()
-	{
-		return year;
-	}
-
-	/**
-	 * @param year the year to set
-	 */
-	public void setYear(String year)
-	{
-		this.year = year;
-	}
-
-	/**
-	 * @return the editable
-	 */
-	public boolean isEditable()
-	{
-		return editable;
-	}
-
-	/**
-	 * @param editable the editable to set
-	 */
-	public void setEditable(boolean editable)
-	{
-		this.editable = editable;
 	}
 
 }

@@ -17,15 +17,15 @@ public class DatabaseClient
 	private final int PORT = 1098;
 	private Database database;
 	private User u;
-	
+
 	public static void main(String[] args)
 	{
 		DatabaseClient c = new DatabaseClient("10.14.1.80");
 	}
-	
+
 	/**
-	 * Constructor: Connects to Server through RMI, allows user to call methods
-	 * to view, create, edit plans in Database
+	 * Constructor: Connects to Server through RMI, allows user to call methods to
+	 * view, create, edit plans in Database
 	 */
 	public DatabaseClient(String ip_address)
 	{
@@ -33,10 +33,10 @@ public class DatabaseClient
 
 		try
 		{
-			Registry registry = LocateRegistry.getRegistry(IP,PORT);
+			Registry registry = LocateRegistry.getRegistry(IP, PORT);
 			database = (Database) registry.lookup("RMIDatabase");
-			String s = database.save();
-			System.out.println(s);
+			database.save();
+
 		} catch (Exception ex)
 		{
 			ex.printStackTrace();

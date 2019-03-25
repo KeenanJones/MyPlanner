@@ -1,18 +1,27 @@
 package software_masters.business_planner;
 
+import java.io.Serializable;
+
 /**
  * @author alexander.garuba
  * 
  *         This class represents a user in the business plan database.
  */
-public class User
+public class User implements Serializable
 {
 
-	private final String name;
-	private final String password;
-	private final Department department;
+	private static final long serialVersionUID = 3082498875947045626L;
+
+	private String name;
+	private String password;
+	private Department department;
 
 	private boolean isAdmin;
+
+	public User()
+	{
+		this(null, null, null, false);
+	}
 
 	/**
 	 * Constructor for User. Called in addUser --> Server class
@@ -30,12 +39,13 @@ public class User
 		this.isAdmin = isAdmin;
 	}
 
-	//Getters
-	
+	// Getters
+
 	public Department getDepartment()
 	{
 		return department;
 	}
+
 	public String getName()
 	{
 		return name;
@@ -50,10 +60,17 @@ public class User
 	{
 		return isAdmin;
 	}
-	
+
 	public String toString()
 	{
-		return "Username: " + getName() + "\nPassword: " + getPassword() + "\nDepartment: " + getDepartment() + "\nAdmin Permissions: " + isAdmin() + "\n";
+		return "Username: " + getName() + "\nPassword: " + getPassword() + "\nDepartment: " + getDepartment()
+				+ "\nAdmin Permissions: " + isAdmin() + "\n";
+	}
+
+	public boolean equals(User u)
+	{
+		return department.equals(u.getDepartment()) && name.equals(u.getName()) && password.equals(u.getPassword())
+				&& (isAdmin == u.isAdmin());
 	}
 
 }
