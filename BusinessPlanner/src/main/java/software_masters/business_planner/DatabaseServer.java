@@ -179,7 +179,7 @@ public class DatabaseServer extends UnicastRemoteObject implements Database
 	 */
 	public Template makePlan(User u) throws RemoteException
 	{
-		return deptList.get(deptList.indexOf(u.getDepartment())).getDeptTemplate();
+		return u.getDepartment().getDeptTemplate();
 	}
 
 	/**

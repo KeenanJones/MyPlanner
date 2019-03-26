@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 public class DatabaseServiceTest extends TestCase
 {
 
-	private final int PORT = 1098;
+	private final int PORT = 1099;
 	private final String IP = "localhost";
 	
 	private ArrayList<User> users;
@@ -46,7 +46,7 @@ public class DatabaseServiceTest extends TestCase
 		
 		//set up Database
 		server = new DatabaseServer(users,depts);
-		server.save();
+		//server.save();
 		
 		super.setUp();
 	}
@@ -86,10 +86,16 @@ public class DatabaseServiceTest extends TestCase
 		
 		DatabaseServer load = DatabaseServer.load();
 		
-		assertEquals(expected,load);
+		assertTrue(expected.getDeptList().get(0).equals(load.getDeptList().get(0)));
+		assertTrue(expected.getDeptList().get(1).equals(load.getDeptList().get(1)));
+		assertTrue(expected.getUserList().get(0).equals(load.getUserList().get(0)));
+		assertTrue(expected.getUserList().get(1).equals(load.getUserList().get(1)));
+		
+		assertFalse(expected.getDeptList().get(0).equals(load.getDeptList().get(1)));
+		assertFalse(expected.getUserList().get(0).equals(load.getUserList().get(1)));
 	}
 	
-	/*public void testRMI_IO()
+	public void testDatabase()
 	{
 		Registry registry;
 		Database database;
@@ -106,6 +112,23 @@ public class DatabaseServiceTest extends TestCase
 			database = (Database) registry.lookup("RMIDatabase");
 			database.save();
 			
+			//try login
+			Department CS = new Department(VMOSA_Builder.generateTemplate());
+			User bradshaw = database.login("bradshaw", "unicorn1");
+			
+			assertTrue(bradshaw.equals(new User("bradshaw","unicorn1", CS, true)));
+			
+			//add first plan
+			Template newTemplate = database.makePlan(bradshaw);
+			newTemplate.setYear("2019");
+			TemplateSection Vision = newTemplate.getRoot();
+			TemplateSection Mission = Vision.getChild(0);
+			TemplateSection Objective = Vision.getChild(0);
+			
+			assertEquals("Vision",Vision.getName());
+			
+			
+			
 		} catch (RemoteException e)
 		{
 			e.printStackTrace();
@@ -117,6 +140,6 @@ public class DatabaseServiceTest extends TestCase
 		}
 		
 		//assertEquals(s, "save() called in Server");
-	}*/
+	}
 
 }

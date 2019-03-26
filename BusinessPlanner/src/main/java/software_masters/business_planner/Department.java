@@ -17,7 +17,8 @@ public class Department implements Serializable
 
 	private static final long serialVersionUID = -6137206464324856865L;
 
-	private final Template deptTemplate;
+	private Template deptTemplate;
+
 	private ArrayList<Template> templateList;
 
 	public Department()
@@ -56,6 +57,11 @@ public class Department implements Serializable
 		return deptTemplate;
 	}
 
+	public void setDeptTemplate(Template deptTemplate)
+	{
+		this.deptTemplate = deptTemplate;
+	}
+
 	/**
 	 * @return the templateList
 	 */
@@ -70,6 +76,45 @@ public class Department implements Serializable
 	public void setTemplateList(ArrayList<Template> templateList)
 	{
 		this.templateList = templateList;
+	}
+	
+	/**
+	 * Tests if two department objects are equal, useful for testing
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		else if (obj == null)
+			return false;
+		else if (getClass() != obj.getClass())
+			return false;
+		else
+		{
+			Department other = (Department) obj;
+			
+			if (!getDeptTemplate().equals(other.getDeptTemplate()))
+			{
+				return false;
+			}
+			else
+			{
+				for (int i = 0; i < templateList.size(); i++)
+				{
+					//if comparing department's # of saved templates are less than this department
+					if (i == other.getTemplateList().size())
+					{
+						return false;
+					}
+					else if (!templateList.get(i).equals(other.getTemplateList().get(i)))
+					{
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 }

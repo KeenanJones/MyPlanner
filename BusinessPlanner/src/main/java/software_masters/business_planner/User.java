@@ -16,6 +16,26 @@ public class User implements Serializable
 	private String password;
 	private Department department;
 
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	public void setDepartment(Department department)
+	{
+		this.department = department;
+	}
+
+	public void setAdmin(boolean isAdmin)
+	{
+		this.isAdmin = isAdmin;
+	}
+
 	private boolean isAdmin;
 
 	public User()
